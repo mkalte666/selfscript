@@ -3,14 +3,16 @@ module selfscript.dload;
 version (Windows) {
     import core.sys.windows.windows;
     import selfscript.windll;
+    import core.runtime;
+    import core.memory;
 }
-import core.runtime;
-import core.memory;
+version (Posix) {
+    import core.sys.posix.dlfcn;
+}
 
 import std.stdio;
 import std.process;
 import f = std.file;
-import std.algorithm;
 import std.string;
 
 
@@ -80,15 +82,14 @@ protected:
             return true;
         }
         version (Posix) {
-            dllHandle = dlOpen(name,RTLD_LAZY);
+            dllHandle = dlopen(toStringz(name),RTLD_LAZY);
             if (dllHandle is null) {
                 return false;
             }
             _loaded = true;
-            dllUserFunction = cast(UserFunctionType) dlsym(dllHandle,UserFunctionName);
+            dllUserFunction = cast(UserFunctionType) dlsym(dllHandle,toStringz(UserFunctionName));
             auto error = dlerror();
             if (error) {
-                writef(stderr, "dlysm error: %s\n", error);
                 return false;
             }
             func = cast(UserFunctionType) dllUserFunction;

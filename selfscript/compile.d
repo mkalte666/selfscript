@@ -70,6 +70,9 @@ bool compileScript(string filename, bool buildDebug = true)
     version (Windows) {
         dmdCommandline ~= winBuildFiles;
     }
+    version (Posix) {
+        dmdCommandline ~= ["-shared","-defaultlib="];
+    }
     // dir and target
     dmdCommandline ~= ["-od"~buildCache, "-of"~buildCache~baseName(filename,".d")~"."~fileExtension];
     // build settings 
