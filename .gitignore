@@ -6,3 +6,5 @@ buildcache/
 *.obj
 selfscriptTest
 *.sln
+.vs/
+*.exe

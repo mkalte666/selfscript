@@ -5,9 +5,8 @@
 	],
     "sourcePaths": ["selfscript"],
     "importPaths": ["."],
-    "targetType": "executable",
-    "targetName": "selfscriptTest",
+    "targetType": "library",
 	"description": "Scripting for D, in D",
 	"copyright": "Copyright © 2017, mkalte666",
-	"license": "proprietary"
+	"license": "MIT"
 }
