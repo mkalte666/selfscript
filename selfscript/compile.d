@@ -114,19 +114,3 @@ bool eval(string input, string tmpname="evaltmp", bool buildDebug = true, string
 
     return false;
 }
-
-void main()
-{
-	writeln("Edit source/app.d to start your project.");
-    for(;;) {
-        string file;
-        foreach (line; stdin.byLine(KeepTerminator.yes)) {
-            if (line == "\n") {
-                break;
-            }
-            file ~= line;    
-        }
-
-        eval(file,"evaltmp");
-    }
-}
