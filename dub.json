@@ -1,0 +1,12 @@
+{
+	"name": "selfscript",
+	"authors": [
+		"Malte Kießling"
+	],
+    "sourcePaths": ["selfscript"],
+    "importPaths": ["."],
+    "targetType": "executable",
+	"description": "Scripting for D, in D",
+	"copyright": "Copyright © 2017, mkalte666",
+	"license": "proprietary"
+}
