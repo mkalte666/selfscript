@@ -1,5 +1,7 @@
 module selfscript.ext.selfhost;
 
+public import selfscript.compile;
+
 template GenSelfhostingMain()
 {
     const char[] GenSelfhostingMain = "
