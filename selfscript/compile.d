@@ -60,7 +60,7 @@ filename = name of the file to compile
 buildDebug = if the script should be build with debug settings 
 Return: false on failure.
 */
-bool compileScript(string filename, bool buildDebug = true)
+bool compileScript(string filename, bool buildDebug = true, string[] compilerFlags = [])
 {
     import std.path;
 
@@ -75,6 +75,8 @@ bool compileScript(string filename, bool buildDebug = true)
     }
     // dir and target
     dmdCommandline ~= ["-od"~buildCache, "-of"~buildCache~baseName(filename,".d")~"."~fileExtension];
+    // additional flags, likely for libs n shit
+    dmdCommandline ~= compilerFlags;
     // build settings 
     if (buildDebug) {
         dmdCommandline ~=  ["-g","-map"];
@@ -97,12 +99,12 @@ bool compileScript(string filename, bool buildDebug = true)
         tmpname = name for the temp. script object
     Return: true on success, false on compiler or loading errors
 */
-bool eval(string input, string tmpname="evaltmp", bool buildDebug = true)
+bool eval(string input, string tmpname="evaltmp", bool buildDebug = true, string[] compilerFlags=[])
 {
     prepareBuilddir();
     auto fname = buildCache~tmpname~".d";
     f.write(fname,"\n\n extern(C) export void dllFunc(){\n"~input~"\n}\n");
-    if (compileScript(fname,buildDebug)) {
+    if (compileScript(fname,buildDebug,compilerFlags)) {
         auto s = new ScriptObjectDShared(buildCache~tmpname);
         s.execute();
         s.unload();
